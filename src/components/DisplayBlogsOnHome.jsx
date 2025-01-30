@@ -10,14 +10,9 @@ function DisplayBlogsOnHome({ blog, index }) {
       localStorage.getItem("currentSessionUser")
     );
     let updateCurrentUserFavouriteBlogs = allUsersFavouriteBlogs[currentSessionUser] || [];
-    console.log(updateCurrentUserFavouriteBlogs);
-    let flag=0;
-    for (let index = 0; index < updateCurrentUserFavouriteBlogs.length; index++) {
-      const element = updateCurrentUserFavouriteBlogs[index];
-      if(element.id===blog.id)
-        flag=1;
-    }
-    if(flag!==1){
+    let flag = updateCurrentUserFavouriteBlogs.some(element => element.id === blog.id) ? 1 : 0;
+
+    if(!flag){
       updateCurrentUserFavouriteBlogs.push(blog);
       setAllUsersFavouriteBlogs({...allUsersFavouriteBlogs, [currentSessionUser]: updateCurrentUserFavouriteBlogs });
       localStorage.setItem("allUsersFavouriteBlogs", JSON.stringify(allUsersFavouriteBlogs));
@@ -68,7 +63,7 @@ function DisplayBlogsOnHome({ blog, index }) {
       {/* Time and Read Time */}
       <div className="flex justify-between text-sm text-gray-500 mt-4">
         <span>{new Date(blog.time).toLocaleString()}</span>
-        <span>{blog.readtime} min read</span>
+        <span>read time - {blog.readTime} </span>
       </div>
 
       {/* Like, Dislike & Save Buttons */}

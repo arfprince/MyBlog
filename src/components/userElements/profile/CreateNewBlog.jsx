@@ -10,6 +10,7 @@ export default function CreateNewBlog() {
   const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
   const [status, setStatus] = useState("");
+  const [readTime, setReadTime] = useState("");
   const handleFornSubmit = (e) => {
     e.preventDefault();
     let newBlog = {
@@ -19,10 +20,12 @@ export default function CreateNewBlog() {
       time: new Date().toISOString(),
       image,
       likeCount: 0,
-      readtime: 0,
+      readTime,
       status,
       id: `${title}${Math.floor((Math.random() * 1000000000) + 1)}`
     };
+    console.log(newBlog);
+    
     let updatedBlogs = blogs;
     const currentSessionUser = JSON.parse(
       localStorage.getItem("currentSessionUser")
@@ -66,6 +69,12 @@ export default function CreateNewBlog() {
           onChange={(e) => setImage(e.target.value)}
           type="text"
           placeholder="Image URL"
+          className="w-full p-2 border rounded mb-2"
+        />
+        <input
+          onChange={(e) => setReadTime(e.target.value)}
+          type="text"
+          placeholder="read time..."
           className="w-full p-2 border rounded mb-2"
         />
         <select

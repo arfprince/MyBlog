@@ -42,7 +42,7 @@ export default function RanderUserCreatedBlogs({
         {/* Time and Read Time */}
         <div className="flex justify-between text-sm text-gray-500 mt-4">
           <span>{new Date(blog.time).toLocaleString()}</span>
-          <span>total read - {blog.readtime}</span>
+          <span>read time - {blog.readTime}</span>
         </div>
 
         {/* Like Count */}

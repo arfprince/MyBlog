@@ -22,6 +22,7 @@ export default function Header() {
                 <Link to="/" className="hover:underline">Home</Link>
                 <Link to="/profile" className="hover:underline">Profile</Link>
                 <Link to="/favorites" className="hover:underline">Favorites</Link>
+                <Link to="/last_ten_likes" className="hover:underline">Last Ten Likes</Link>
                 <button onClick={handleLogOutClick} className="bg-red-500 px-3 py-1 rounded">Logout</button>
               </div>
             ) : (

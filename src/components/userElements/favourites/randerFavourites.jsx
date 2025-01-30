@@ -47,7 +47,7 @@ function RanderFavourites({ blog }) {
       {/* Time and Read Time */}
       <div className="flex justify-between text-sm text-gray-500 mt-4">
         <span>{new Date(blog.time).toLocaleString()}</span>
-        <span>{blog.readtime} min read</span>
+        <span> read time - {blog.readTime}</span>
       </div>
 
       {/* Like Count & Delete Button */}

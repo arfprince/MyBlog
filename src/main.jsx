@@ -17,6 +17,7 @@ import Home from "./components/Home.jsx";
 import Profile from "./components/userElements/profile/Profile.jsx";
 import CreateNewBlog from "./components/userElements/profile/CreateNewBlog.jsx";
 import Favorites from "./components/userElements/favourites/Favourites.jsx";
+import LastTenLikes from "./components/userElements/lastTenLikes/lastTenLikes.jsx";
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -26,6 +27,7 @@ const routes = createBrowserRouter(
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/newBlog" element={<CreateNewBlog />} />
+      <Route path="/last_ten_likes" element={<LastTenLikes />} />
     </Route>
   )
 );
