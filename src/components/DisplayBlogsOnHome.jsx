@@ -1,24 +1,59 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useFavouriteBlogs } from "../context/UsersFavouriteBlogContext";
+import { useLikedBlogs } from "../context/UsersLikedBlogContext";
+import { useBlogs } from "../context/BlogsContext";
 
-function DisplayBlogsOnHome({ blog, index }) {
+function DisplayBlogsOnHome({ blog, index, key }) {
   const [showMore, setShowMore] = useState(false);
   const {allUsersFavouriteBlogs, setAllUsersFavouriteBlogs} = useFavouriteBlogs();
-  const handleSaveBtn = () => {
-    const currentSessionUser = JSON.parse(
-      localStorage.getItem("currentSessionUser")
-    );
-    let updateCurrentUserFavouriteBlogs = allUsersFavouriteBlogs[currentSessionUser] || [];
-    let flag = updateCurrentUserFavouriteBlogs.some(element => element.id === blog.id) ? 1 : 0;
+  const {allUserslikedBlogs, setAllUsersLikedBlogs} = useLikedBlogs();
+  const {blogs, setBlogs} = useBlogs();
+  const [saveButtonClicked, setSavedButtonClicked] = useState(false);
+  const [likeButtonClicked, setLikeButtonClicked] = useState(false);
+  
+  const currentSessionUser = JSON.parse(
+    localStorage.getItem("currentSessionUser")
+  );
 
-    if(!flag){
-      updateCurrentUserFavouriteBlogs.push(blog);
-      setAllUsersFavouriteBlogs({...allUsersFavouriteBlogs, [currentSessionUser]: updateCurrentUserFavouriteBlogs });
-      localStorage.setItem("allUsersFavouriteBlogs", JSON.stringify(allUsersFavouriteBlogs));
-      alert("Blog added to your favourites!");
+  useEffect(()=>{
+    if(saveButtonClicked){
+      let updateCurrentUserFavouriteBlogs = allUsersFavouriteBlogs[currentSessionUser] || [];
+      let flag = updateCurrentUserFavouriteBlogs.some(element => element.id === blog.id) ? 1 : 0;
+
+      if(!flag){
+        updateCurrentUserFavouriteBlogs.push(blog);
+        const newAllUsersFavouriteBlogs = {...allUsersFavouriteBlogs, [currentSessionUser]: updateCurrentUserFavouriteBlogs };
+        setAllUsersFavouriteBlogs(newAllUsersFavouriteBlogs);
+        localStorage.setItem("allUsersFavouriteBlogs", JSON.stringify(newAllUsersFavouriteBlogs));
+        alert("Blog added to your favourites!");
+        setSavedButtonClicked(false);
+      }
     }
-  }
+    if(likeButtonClicked){
+      let updatedCurrentUserLikedBlogs = allUserslikedBlogs[currentSessionUser] || [];
+      let flag = updatedCurrentUserLikedBlogs.some(element => element.id === blog.id) ? 1 : 0;
+
+      if(!flag){
+        let updatedCurrentBlog = { ...blog, likeCount: blog.likeCount + 1 };
+        let likedBloggerBlogs = blogs[blog.userName] || [];
+        let updatedLikedBloggerBlogs = likedBloggerBlogs.map(b => b.id === blog.id ? updatedCurrentBlog : b);
+        if (!likedBloggerBlogs.some(b => b.id === blog.id)) {
+          updatedLikedBloggerBlogs.push(updatedCurrentBlog);
+        }
+        setBlogs({ ...blogs, [blog.userName]: updatedLikedBloggerBlogs });
+        localStorage.setItem("blogs", JSON.stringify({ ...blogs, [blog.userName]: updatedLikedBloggerBlogs }));
+      
+        updatedCurrentUserLikedBlogs.push(updatedCurrentBlog);
+        const newAllUsersLikedBlogs = {...allUserslikedBlogs, [currentSessionUser]: updatedCurrentUserLikedBlogs };
+        setAllUsersLikedBlogs(newAllUsersLikedBlogs);
+        localStorage.setItem("allUsersLikedBlogs", JSON.stringify(newAllUsersLikedBlogs));
+        alert("Blog liked successfully!");
+        setLikeButtonClicked(false);
+      }
+    }
+  },[saveButtonClicked, likeButtonClicked])
+
   return (
     <div className="bg-gray-100 p-6 rounded-xl shadow-md mt-6 hover:bg-gray-200 transition duration-300">
       {/* Blog Image */}
@@ -69,14 +104,11 @@ function DisplayBlogsOnHome({ blog, index }) {
       {/* Like, Dislike & Save Buttons */}
       <div className="mt-4 flex justify-between items-center">
         <div className="flex gap-3 text-gray-700">
-          <button className="flex items-center gap-1 hover:text-blue-500 transition">
+          <button onClick={()=> setLikeButtonClicked(true)} className="flex items-center gap-1 hover:text-blue-500 transition">
             👍 <span>{blog.likeCount}</span>
           </button>
-          <button className="flex items-center gap-1 hover:text-red-500 transition">
-            👎
-          </button>
         </div>
-        <button onClick={handleSaveBtn} className="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition">
+        <button onClick={()=> setSavedButtonClicked(true)} className="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition">
           Favourite
         </button>
       </div>

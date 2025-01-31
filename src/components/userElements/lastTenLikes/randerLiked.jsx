@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-function RanderFavourites({ blog }) {
+function RanderLiked({ blog }) {
   const [showMore, setShowMore] = useState(false);
-
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md mt-6 hover:bg-gray-200 transition duration-300">
       {/* Blog Image */}
@@ -66,4 +65,4 @@ function RanderFavourites({ blog }) {
   );
 }
 
-export default RanderFavourites;
+export default RanderLiked;

@@ -16,13 +16,13 @@ export default function App() {
 //   username2: {email:email, password:password}    
 // }
 
-// allUsersData=[
+// allUserslikedBlogs=[
 //   username1:[
-//     {title:title, author:username, content:content, time: timestamp,image: URL, likeCount:likeCount, dislikeCount:dislikeCount,readtime:readtime, status:public/private}
+//     {title:title, id:id author:username, content:content, time: timestamp,image: URL, likeCount:likeCount, dislikeCount:dislikeCount,readtime:readtime, status:public/private}
 
 //   ]
 //   username2:[
-//      {title:title, author:username, content:content, time: timestamp,image: URL, likeCount:likeCount, dislikeCount:dislikeCount,readtime:readtime, status:public/private}
+//      {title:title, id:id author:username, content:content, time: timestamp,image: URL, likeCount:likeCount, dislikeCount:dislikeCount,readtime:readtime, status:public/private}
 
 //   ]
 // ]

@@ -20,8 +20,7 @@ export default function Home() {
         <div key={username} className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
           {/* blog Section */}
           {userBlogs.map((blog, index) => (
-            <DisplayBlogsOnHome blog={blog} index={index}/>
-            
+            blog.status==="public" && <DisplayBlogsOnHome blog={blog} index={index} key={index}/>
           ))}
         </div>
       ))}

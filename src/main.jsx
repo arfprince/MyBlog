@@ -18,6 +18,8 @@ import Profile from "./components/userElements/profile/Profile.jsx";
 import CreateNewBlog from "./components/userElements/profile/CreateNewBlog.jsx";
 import Favorites from "./components/userElements/favourites/Favourites.jsx";
 import LastTenLikes from "./components/userElements/lastTenLikes/lastTenLikes.jsx";
+import { LikedBlogsProvider } from "./context/UsersLikedBlogContext.jsx";
+
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -33,11 +35,14 @@ const routes = createBrowserRouter(
 );
 
 createRoot(document.getElementById("root")).render(
-  <FavouriteBlogsProvider>
-    <BlogsProvider>
-      <AuthProvider>
-        <RouterProvider router={routes} />
-      </AuthProvider>
-    </BlogsProvider>
-  </FavouriteBlogsProvider>
+  <LikedBlogsProvider>
+    <FavouriteBlogsProvider>
+      <BlogsProvider>
+        <AuthProvider>
+          <RouterProvider router={routes} />
+        </AuthProvider>
+      </BlogsProvider>
+    </FavouriteBlogsProvider>
+  </LikedBlogsProvider>
+    
 );

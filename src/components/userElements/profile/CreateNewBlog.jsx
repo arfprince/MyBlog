@@ -13,6 +13,9 @@ export default function CreateNewBlog() {
   const [readTime, setReadTime] = useState("");
   const handleFornSubmit = (e) => {
     e.preventDefault();
+    const currentSessionUser = JSON.parse(
+      localStorage.getItem("currentSessionUser")
+    );
     let newBlog = {
       title,
       author,
@@ -22,14 +25,12 @@ export default function CreateNewBlog() {
       likeCount: 0,
       readTime,
       status,
-      id: `${title}${Math.floor((Math.random() * 1000000000) + 1)}`
+      id: `${title}${Math.floor((Math.random() * 1000000000) + 1)}`,
+      userName: currentSessionUser
     };
     console.log(newBlog);
     
     let updatedBlogs = blogs;
-    const currentSessionUser = JSON.parse(
-      localStorage.getItem("currentSessionUser")
-    );
     const currentSessionUserBlogs = updatedBlogs[currentSessionUser] || [];
     currentSessionUserBlogs.push(newBlog);
     updatedBlogs[currentSessionUser] = currentSessionUserBlogs;
