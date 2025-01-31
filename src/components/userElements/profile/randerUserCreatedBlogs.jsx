@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useBlogs } from "../../../context/BlogsContext";
 import { useFavouriteBlogs } from "../../../context/UsersFavouriteBlogContext";
 import { useLikedBlogs } from "../../../context/UsersLikedBlogContext";
+import ReactTimeAgo from "react-time-ago";
 
 export default function RanderUserCreatedBlogs({
   blog,
@@ -15,10 +16,10 @@ export default function RanderUserCreatedBlogs({
   const [showMore, setShowMore] = useState(false);
   const [status, setStatus] = useState(blog.status);
   const { setBlogs } = useBlogs();
-  const { allUsersFavouriteBlogs, setAllUsersFavouriteBlogs } =
-    useFavouriteBlogs();
+  const { allUsersFavouriteBlogs, setAllUsersFavouriteBlogs } = useFavouriteBlogs();
   const { allUserslikedBlogs, setAllUsersLikedBlogs } = useLikedBlogs();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  
   const toggleStatus = () => {
     const newStatus = status === "public" ? "private" : "public";
     setStatus(newStatus);
@@ -109,6 +110,9 @@ export default function RanderUserCreatedBlogs({
         {/* Time & Read Time */}
         <div className="flex justify-between text-sm text-gray-500 mt-4">
           <span>{new Date(blog.time).toLocaleString()}</span>
+          <span>
+            <ReactTimeAgo date={new Date(blog.time)} locale="en-US" />
+          </span>
           <span>⏳ {blog.readTime} min read</span>
         </div>
 

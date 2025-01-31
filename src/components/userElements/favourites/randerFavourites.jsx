@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import ReactTimeAgo from "react-time-ago";
 function RanderFavourites({ blog }) {
   const [showMore, setShowMore] = useState(false);
 
@@ -47,7 +47,10 @@ function RanderFavourites({ blog }) {
       {/* Time and Read Time */}
       <div className="flex justify-between text-sm text-gray-500 mt-4">
         <span>{new Date(blog.time).toLocaleString()}</span>
-        <span> read time - {blog.readTime}</span>
+        <span>
+          <ReactTimeAgo date={new Date(blog.time)} locale="en-US" />
+        </span>
+        <span>⏳ {blog.readTime} read</span>
       </div>
 
       {/* Like Count & Delete Button */}
