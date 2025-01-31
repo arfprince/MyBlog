@@ -35,16 +35,14 @@ function DisplayBlogsOnHome({ blog }) {
   };
 
   const toggleLike = () => {
+    let updatedCurrentBlog = { ...blog, likeCount: isLiked ? blog.likeCount - 1 : blog.likeCount + 1 };
     let userLikedBlogs = allUserslikedBlogs[currentSessionUser] || [];
 
     if (isLiked) {
       userLikedBlogs = userLikedBlogs.filter(liked => liked.id !== blog.id);
     } else {
-      userLikedBlogs.push(blog);
+      userLikedBlogs.push(updatedCurrentBlog);
     }
-
-    let updatedCurrentBlog = { ...blog, likeCount: isLiked ? blog.likeCount - 1 : blog.likeCount + 1 };
-
     let likedBloggerBlogs = blogs[blog.userName] || [];
     let updatedLikedBloggerBlogs = likedBloggerBlogs.map(b => (b.id === blog.id ? updatedCurrentBlog : b));
 
