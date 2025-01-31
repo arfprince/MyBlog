@@ -13,15 +13,15 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-r from-blue-900 to-orange-500 text-white p-4 flex justify-between items-center shadow-lg">
-      <h1 className="text-2xl font-extrabold">My Blog</h1>
-      <div className="flex gap-6 items-center">
-        <nav className="flex gap-6">
+    <header className="bg-gradient-to-r from-blue-900 to-orange-500 text-white p-4 flex justify-between items-center shadow-lg flex-wrap">
+      <h1 className="text-2xl font-extrabold sm:text-xl md:text-2xl lg:text-3xl">My Blog</h1>
+      <div className="flex gap-6 items-center mt-4 sm:mt-0">
+        <nav className="flex flex-wrap gap-6 justify-center sm:justify-start">
           {isLoggedIn ? (
-            <div className="flex items-center gap-6">
-              <h1 className="text-lg">
+            <div className="flex items-center gap-6 sm:gap-4 text-lg sm:text-base">
+              <h1 className="text-lg sm:text-base">
                 Welcome to Blog{" "}
-                <span className="font-bold text-blue-500">
+                <span className="font-bold text-blue-800">
                   {JSON.parse(localStorage.getItem("currentSessionUser"))
                     .toLocaleUpperCase()
                     .split("@")[0]}
@@ -29,25 +29,25 @@ export default function Header() {
               </h1>
               <Link
                 to="/"
-                className="text-lg font-semibold hover:text-blue-200 transition-colors"
+                className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
               >
                 Home
               </Link>
               <Link
                 to="/profile"
-                className="text-lg font-semibold hover:text-blue-200 transition-colors"
+                className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
               >
                 Profile
               </Link>
               <Link
                 to="/favorites"
-                className="text-lg font-semibold hover:text-blue-200 transition-colors"
+                className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
               >
                 Favorites
               </Link>
               <Link
                 to="/last_ten_likes"
-                className="text-lg font-semibold hover:text-blue-200 transition-colors"
+                className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
               >
                 Last Ten Likes
               </Link>
