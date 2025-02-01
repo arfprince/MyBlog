@@ -22,6 +22,7 @@ import CreateNewBlog from "./components/userElements/profile/CreateNewBlog.jsx";
 import Favorites from "./components/userElements/favourites/Favourites.jsx";
 import LastTenLikes from "./components/userElements/lastTenLikes/lastTenLikes.jsx";
 import { LikedBlogsProvider } from "./context/UsersLikedBlogContext.jsx";
+import PrivateRoute from "./Authentication/PrivateRoutes.jsx";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -29,10 +30,38 @@ const routes = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/favorites" element={<Favorites />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/newBlog" element={<CreateNewBlog />} />
-      <Route path="/last_ten_likes" element={<LastTenLikes />} />
+      <Route
+        path="/favorites"
+        element={
+          <PrivateRoute>
+            <Favorites />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/newBlog"
+        element={
+          <PrivateRoute>
+            <CreateNewBlog />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/last_ten_likes"
+        element={
+          <PrivateRoute>
+            <LastTenLikes />
+          </PrivateRoute>
+        }
+      />
     </Route>
   )
 );
@@ -47,5 +76,4 @@ createRoot(document.getElementById("root")).render(
       </BlogsProvider>
     </FavouriteBlogsProvider>
   </LikedBlogsProvider>
-    
 );
