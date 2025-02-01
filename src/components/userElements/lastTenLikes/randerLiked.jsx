@@ -49,7 +49,7 @@ function RanderLiked({ blog }) {
         <span>
           <ReactTimeAgo date={new Date(blog.time)} locale="en-US" />
         </span>
-        <span>⏳ {blog.readTime} read</span>
+        <span>⏳ {blog.readTime} mins read</span>
       </div>
 
       {/* Like Count & Delete Button */}

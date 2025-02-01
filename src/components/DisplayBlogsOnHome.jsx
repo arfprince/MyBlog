@@ -96,7 +96,7 @@ function DisplayBlogsOnHome({ blog }) {
         <span>
           <ReactTimeAgo date={new Date(blog.time)} locale="en-US" />
         </span>
-        <span>⏳ {blog.readTime} min read</span>
+        <span>⏳ {blog.readTime} mins read</span>
       </div>
 
       <div className="mt-4 flex justify-between items-center">

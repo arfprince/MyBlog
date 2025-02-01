@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    navigate("/");
+  }, [isLoggedIn])
+  
   const handleLogOutClick = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("currentSessionUser");

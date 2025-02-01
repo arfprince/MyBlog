@@ -19,6 +19,11 @@ export default function RanderUserCreatedBlogs({
   const { allUsersFavouriteBlogs, setAllUsersFavouriteBlogs } = useFavouriteBlogs();
   const { allUserslikedBlogs, setAllUsersLikedBlogs } = useLikedBlogs();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({
+    title: "",
+    image: "",
+    content: ""
+  });
   
   const toggleStatus = () => {
     const newStatus = status === "public" ? "private" : "public";
@@ -61,6 +66,64 @@ export default function RanderUserCreatedBlogs({
       "allUsersLikedBlogs",
       JSON.stringify(updatedAllUsersLikedBlogs)
     );
+  };
+
+  const validateField = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "title":
+        if (!value.trim()) {
+          error = "Title is required";
+        } else if (value.length < 3) {
+          error = "Title must be at least 3 characters long";
+        } else if (value.length > 100) {
+          error = "Title must be less than 100 characters";
+        }
+        break;
+      case "image":
+        if (value.trim() && !value.match(/^(http|https):\/\/[^ "]+$/)) {
+          error = "Please enter a valid image URL";
+        }
+        break;
+      case "content":
+        if (!value.trim()) {
+          error = "Content is required";
+        } else if (value.length < 10) {
+          error = "Content must be at least 10 characters long";
+        } else if (value.length > 5000) {
+          error = "Content must be less than 5000 characters";
+        }
+        break;
+      default:
+        break;
+    }
+    return error;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedBlog({ ...editedBlog, [name]: value });
+    const error = validateField(name, value);
+    setValidationErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const handleSave = () => {
+    // Validate all fields before saving
+    const newErrors = {
+      title: validateField("title", editedBlog.title),
+      image: validateField("image", editedBlog.image),
+      content: validateField("content", editedBlog.content)
+    };
+
+    setValidationErrors(newErrors);
+
+    // Check if there are any errors
+    if (Object.values(newErrors).some(error => error !== "")) {
+      return;
+    }
+
+    setSaveEditedBlog(true);
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -113,7 +176,7 @@ export default function RanderUserCreatedBlogs({
           <span>
             <ReactTimeAgo date={new Date(blog.time)} locale="en-US" />
           </span>
-          <span>⏳ {blog.readTime} min read</span>
+          <span>⏳ {blog.readTime} mins read</span>
         </div>
 
         {/* Buttons (Likes, Edit, Delete) */}
@@ -128,6 +191,7 @@ export default function RanderUserCreatedBlogs({
               onClick={() => {
                 setIsEditModalOpen(true);
                 setEditedBlog(blog);
+                setValidationErrors({ title: "", image: "", content: "" });
               }}
               className="bg-blue-500 text-white text-sm px-5 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300"
             >
@@ -157,42 +221,60 @@ export default function RanderUserCreatedBlogs({
             </h2>
 
             {/* Title */}
-            <label className="block text-sm font-medium text-gray-700">
-              Title
-            </label>
-            <input
-              type="text"
-              value={editedBlog.title}
-              onChange={(e) =>
-                setEditedBlog({ ...editedBlog, title: e.target.value })
-              }
-              className="w-full p-2 border rounded-md mt-1 focus:ring focus:ring-blue-200"
-            />
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={editedBlog.title}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md mt-1 focus:ring focus:ring-blue-200 ${
+                  validationErrors.title ? 'border-red-500' : ''
+                }`}
+              />
+              {validationErrors.title && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
+              )}
+            </div>
 
             {/* Image URL */}
-            <label className="block text-sm font-medium text-gray-700 mt-3">
-              Image URL
-            </label>
-            <input
-              type="text"
-              value={editedBlog.image}
-              onChange={(e) =>
-                setEditedBlog({ ...editedBlog, image: e.target.value })
-              }
-              className="w-full p-2 border rounded-md mt-1 focus:ring focus:ring-blue-200"
-            />
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Image URL
+              </label>
+              <input
+                type="text"
+                name="image"
+                value={editedBlog.image}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md mt-1 focus:ring focus:ring-blue-200 ${
+                  validationErrors.image ? 'border-red-500' : ''
+                }`}
+              />
+              {validationErrors.image && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.image}</p>
+              )}
+            </div>
 
             {/* Content */}
-            <label className="block text-sm font-medium text-gray-700 mt-3">
-              Content
-            </label>
-            <textarea
-              value={editedBlog.content}
-              onChange={(e) =>
-                setEditedBlog({ ...editedBlog, content: e.target.value })
-              }
-              className="w-full p-2 border rounded-md mt-1 h-28 focus:ring focus:ring-blue-200"
-            />
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Content
+              </label>
+              <textarea
+                name="content"
+                value={editedBlog.content}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md mt-1 h-28 focus:ring focus:ring-blue-200 ${
+                  validationErrors.content ? 'border-red-500' : ''
+                }`}
+              />
+              {validationErrors.content && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.content}</p>
+              )}
+            </div>
 
             {/* Buttons */}
             <div className="flex justify-end space-x-4 mt-5">
@@ -203,10 +285,7 @@ export default function RanderUserCreatedBlogs({
                 Cancel
               </button>
               <button
-                onClick={() => {
-                  setSaveEditedBlog(true);
-                  setIsEditModalOpen(false);
-                }}
+                onClick={handleSave}
                 className="px-5 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300"
               >
                 Save

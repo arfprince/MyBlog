@@ -1,25 +1,39 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 export default function Register() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
-    let curEmail = email;
-    let curPass = password;
-    curEmail = curEmail.trim();
-    curPass = curPass.trim();
-    if (email.length <= 0 || password.length <= 0) {
+    let curEmail = email.trim();
+    let curPass = password.trim();
+
+    if (curEmail.length <= 0 || curPass.length <= 0) {
       alert("Please fill out all fields.");
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(curEmail)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (curPass.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
+
     let users = JSON.parse(localStorage.getItem("users")) || {};
     if (users[curEmail]) {
       alert("Username already exists.");
       return;
     }
-    users[curEmail] = { email: email, password: password };
+
+    users[curEmail] = { email: curEmail, password: curPass };
     localStorage.setItem("users", JSON.stringify(users));
     alert("Registration Successful! You can now Login.");
     navigate("/login");
