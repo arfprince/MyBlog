@@ -8,8 +8,7 @@ export default function Home() {
 
   const allPublicBlogs = Object.values(blogs)
     .flat()
-    .filter((blog) => blog.status === "public")
-    .sort(() => Math.random() - 0.5);
+    .filter((blog) => blog.status === "public");
 
   return (
     <div className="text-center mt-10 px-4">
