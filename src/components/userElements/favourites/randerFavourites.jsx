@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactTimeAgo from "react-time-ago";
-function RanderFavourites({ blog }) {
-  const [showMore, setShowMore] = useState(false);
 
+function RanderFavourites({ blog, setRemoveFavourite, setDeletedFavBlogId }) {
+  const [showMore, setShowMore] = useState(false);
+  
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md mt-6 hover:bg-gray-200 transition duration-300">
       {/* Blog Image */}
@@ -58,12 +59,12 @@ function RanderFavourites({ blog }) {
         <span className="text-gray-700 font-medium">
           👍 {blog.likeCount} Likes
         </span>
-        {/* <button
-          onClick={() => {}}
+        <button
+          onClick={()=>{setRemoveFavourite(true);setDeletedFavBlogId(blog.id)}}
           className="bg-red-500 text-white text-sm px-4 py-2 rounded-md hover:bg-red-700 transition"
         >
           Delete
-        </button> */}
+        </button>
       </div>
     </div>
   );
