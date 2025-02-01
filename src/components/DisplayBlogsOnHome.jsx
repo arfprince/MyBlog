@@ -101,24 +101,24 @@ function DisplayBlogsOnHome({ blog }) {
 
       <div className="mt-4 flex justify-between items-center">
         {/* Like Button */}
-        <button
+        {currentSessionUser && <button
           onClick={toggleLike}
           className={`px-5 py-2 rounded-lg transition flex items-center gap-1 ${
             isLiked ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-300 hover:bg-gray-400"
           } text-white`}
         >
           👍 {blog.likeCount}
-        </button>
+        </button>}
 
         {/* Favourite Button */}
-        <button
+        {currentSessionUser && <button
           onClick={toggleFavourite}
           className={`px-5 py-2 rounded-lg transition ${
             isFavourite ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
           } text-white`}
         >
           {isFavourite ? "Unfavourite" : "Favourite"}
-        </button>
+        </button>}
       </div>
     </div>
   );
