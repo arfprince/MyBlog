@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+
 export default function Login() {
     const navigate = useNavigate(); 
     const [password, setpassword] = useState("");
     const [email, setEmail] = useState("");
     const {isLoggedIn, setIsLoggedIn} = useAuth();
+    useEffect(() => {
+      if (isLoggedIn) {
+        navigate("/");
+      }
+    }, [isLoggedIn]);
     const handleLogin = (e) => {
       e.preventDefault();
       
@@ -18,7 +24,7 @@ export default function Login() {
         localStorage.setItem("currentSessionUser", JSON.stringify(email));
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", true);
-        return navigate('/');
+        // return navigate('/');
       }
     };
     return (
