@@ -10,7 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { BlogsProvider } from "./context/BlogsContext.jsx";
 import { FavouriteBlogsProvider } from "./context/UsersFavouriteBlogContext.jsx";
 import Layout from "./components/Layout.jsx";
@@ -26,6 +26,7 @@ import PrivateRoute from "./Authentication/PrivateRoutes.jsx";
 import { UserLoginProvider } from "./context/userLoginContext.jsx";
 
 const routes = createBrowserRouter(
+  
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />

@@ -6,14 +6,18 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("/");
+    if(isLoggedIn){
+      navigate("/");
+      console.log("test from header page");
+    }
+    
   }, [isLoggedIn])
   
   const handleLogOutClick = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("currentSessionUser");
     localStorage.setItem("isLoggedIn", false);
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -63,12 +67,21 @@ export default function Header() {
               </button>
             </div>
           ) : (
+            <>
+             <Link
+                to="/"
+                className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
+              >
+                Home
+              </Link>
             <Link
               to="/login"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-all"
             >
               Login
             </Link>
+            </>
+
           )}
         </nav>
       </div>

@@ -20,7 +20,6 @@ function Profile() {
   const handleCreateNewBlog = () => {
     navigate("/newBlog");
   };
-  
   useEffect(() => {
     if (saveEditedBlog) {
       let updatedBlogs = blogs;
