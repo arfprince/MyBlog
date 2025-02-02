@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useBlogs } from "../context/BlogsContext";
-import DisplayBlogsOnHome from "./DisplayBlogsOnHome";
+import DisplayBlogsOnHome from "../components/DisplayBlogsOnHome";
 
 export default function Home() {
   const { blogs } = useBlogs();
@@ -47,9 +47,7 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {allPublicBlogs
-                .filter((blog) =>
-                  blog.title.toLowerCase().includes(searchTerm)
-                )
+                .filter((blog) => blog.title.toLowerCase().includes(searchTerm))
                 .map((blog, index) => (
                   <DisplayBlogsOnHome blog={blog} key={blog.id || index} />
                 ))}

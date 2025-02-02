@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useBlogs } from "../../../context/BlogsContext";
-import RanderUserCreatedBlogs from "./randerUserCreatedBlogs";
-import { useFavouriteBlogs } from "../../../context/UsersFavouriteBlogContext";
-import { useLikedBlogs } from "../../../context/UsersLikedBlogContext";
+import { useBlogs } from "../context/BlogsContext";
+import RanderUserCreatedBlogs from "../components/userElements/profile/randerUserCreatedBlogs";
+import { useFavouriteBlogs } from "../context/UsersFavouriteBlogContext";
+import { useLikedBlogs } from "../context/UsersLikedBlogContext";
 function Profile() {
   const { blogs, setBlogs } = useBlogs();
   const [deleteButtonClicked, setDeleteButtonClicked] = useState(false);

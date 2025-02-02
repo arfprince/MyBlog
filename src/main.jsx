@@ -13,19 +13,18 @@ import "./index.css";
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { BlogsProvider } from "./context/BlogsContext.jsx";
 import { FavouriteBlogsProvider } from "./context/UsersFavouriteBlogContext.jsx";
-import Layout from "./components/Layout.jsx";
-import Login from "./Authentication/Login.jsx";
-import Register from "./Authentication/Register.jsx";
-import Home from "./components/Home.jsx";
-import Profile from "./components/userElements/profile/Profile.jsx";
+import Layout from "./Layout.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Home from "./pages/Home.jsx";
+import Profile from "./pages/Profile.jsx";
 import CreateNewBlog from "./components/userElements/profile/CreateNewBlog.jsx";
-import Favorites from "./components/userElements/favourites/Favourites.jsx";
-import LastTenLikes from "./components/userElements/lastTenLikes/lastTenLikes.jsx";
+import Favorites from "./pages/Favourites.jsx";
+import LastTenLikes from "./pages/lastTenLikes.jsx";
 import { LikedBlogsProvider } from "./context/UsersLikedBlogContext.jsx";
 import PrivateRoute from "./Authentication/PrivateRoutes.jsx";
 
 const routes = createBrowserRouter(
-  
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
@@ -68,15 +67,13 @@ const routes = createBrowserRouter(
 );
 
 createRoot(document.getElementById("root")).render(
-
-    <LikedBlogsProvider>
-      <FavouriteBlogsProvider>
-        <BlogsProvider>
-          <AuthProvider>
-            <RouterProvider router={routes} />
-          </AuthProvider>
-        </BlogsProvider>
-      </FavouriteBlogsProvider>
-    </LikedBlogsProvider>
-
+  <LikedBlogsProvider>
+    <FavouriteBlogsProvider>
+      <BlogsProvider>
+        <AuthProvider>
+          <RouterProvider router={routes} />
+        </AuthProvider>
+      </BlogsProvider>
+    </FavouriteBlogsProvider>
+  </LikedBlogsProvider>
 );
