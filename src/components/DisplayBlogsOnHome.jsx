@@ -6,7 +6,7 @@ import { useBlogs } from "../context/BlogsContext";
 import { Link } from "react-router-dom";
 
 function DisplayBlogsOnHome({ blog }) {
-  // const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const { allUsersFavouriteBlogs, setAllUsersFavouriteBlogs } =
     useFavouriteBlogs();
   const { allUserslikedBlogs, setAllUsersLikedBlogs } = useLikedBlogs();
@@ -107,9 +107,9 @@ function DisplayBlogsOnHome({ blog }) {
         </span>
       </div>
 
-      {/* <p className="text-gray-600 mt-3">
+      <p className="text-gray-600 mt-3">
         {showMore ? blog.content : `${blog.content.substring(0, 100)}...`}
-      </p> */}
+      </p>
       {/* <button
         onClick={() => setShowMore(!showMore)}
         className="text-blue-500 mt-2 font-medium hover:underline"
