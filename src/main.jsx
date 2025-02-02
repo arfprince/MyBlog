@@ -70,15 +70,14 @@ const routes = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
 
-    <UserLoginProvider>
-      <LikedBlogsProvider>
-        <FavouriteBlogsProvider>
-          <BlogsProvider>
-            <AuthProvider>
-              <RouterProvider router={routes} />
-            </AuthProvider>
-          </BlogsProvider>
-        </FavouriteBlogsProvider>
-      </LikedBlogsProvider>
-    </UserLoginProvider>
+    <LikedBlogsProvider>
+      <FavouriteBlogsProvider>
+        <BlogsProvider>
+          <AuthProvider>
+            <RouterProvider router={routes} />
+          </AuthProvider>
+        </BlogsProvider>
+      </FavouriteBlogsProvider>
+    </LikedBlogsProvider>
+
 );
