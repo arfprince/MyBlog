@@ -12,7 +12,6 @@ export function UserLoginProvider({ children }) {
         () => JSON.parse(localStorage.getItem("isLoggedIn")) || false
     );
 
-    // Ensure localStorage updates whenever isLoggedIn changes
     useEffect(() => {
         localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
     }, [isLoggedIn]);
