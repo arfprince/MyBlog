@@ -12,7 +12,7 @@ export default function Login() {
     if (isLoggedIn) {
       navigate("/");
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn]);
 
   const handleLogin = (e) => {
     e.preventDefault();

@@ -5,13 +5,6 @@ import { useEffect } from "react";
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    if(isLoggedIn){
-      navigate("/");
-      console.log("test from header page");
-    }
-    
-  }, [isLoggedIn])
   
   const handleLogOutClick = () => {
     setIsLoggedIn(false);
@@ -67,7 +60,7 @@ export default function Header() {
               </button>
             </div>
           ) : (
-            <>
+            <div className="flex items-center gap-6 sm:gap-4 text-lg sm:text-base">
              <Link
                 to="/"
                 className="text-lg sm:text-base md:text-sm font-semibold hover:text-blue-200 transition-colors"
@@ -80,8 +73,7 @@ export default function Header() {
             >
               Login
             </Link>
-            </>
-
+            </div>
           )}
         </nav>
       </div>
