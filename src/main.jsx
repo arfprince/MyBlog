@@ -23,6 +23,7 @@ import Favorites from "./pages/Favourites.jsx";
 import LastTenLikes from "./pages/lastTenLikes.jsx";
 import { LikedBlogsProvider } from "./context/UsersLikedBlogContext.jsx";
 import PrivateRoute from "./Authentication/PrivateRoutes.jsx";
+import DetailedBlog from "./components/DetailedBlog.jsx";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +39,16 @@ const routes = createBrowserRouter(
           </PrivateRoute>
         }
       />
+
+      <Route
+        path="/:id"
+        element={
+          <PrivateRoute>
+            <DetailedBlog />
+          </PrivateRoute>
+        }
+      />
+
       <Route
         path="/profile"
         element={

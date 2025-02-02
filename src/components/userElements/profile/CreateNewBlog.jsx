@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useBlogs } from "../../../context/BlogsContext";
 
 export default function CreateNewBlog() {
@@ -15,7 +15,7 @@ export default function CreateNewBlog() {
     content: "",
     image: "",
     readTime: "",
-    status: ""
+    status: "",
   });
 
   const validateField = (name, value) => {
@@ -70,7 +70,7 @@ export default function CreateNewBlog() {
     const { name, value } = e.target;
     setter(value);
     const error = validateField(name, value);
-    setValidationErrors(prev => ({ ...prev, [name]: error }));
+    setValidationErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   const handleFormSubmit = (e) => {
@@ -81,12 +81,12 @@ export default function CreateNewBlog() {
       content: validateField("content", content),
       image: validateField("image", image),
       readTime: validateField("readTime", readTime),
-      status: validateField("status", status)
+      status: validateField("status", status),
     };
 
     setValidationErrors(newErrors);
 
-    if (Object.values(newErrors).some(error => error !== "")) {
+    if (Object.values(newErrors).some((error) => error !== "")) {
       return;
     }
 
@@ -95,15 +95,15 @@ export default function CreateNewBlog() {
     );
     let newBlog = {
       title,
-      author: `${currentSessionUser.split('@')[0]}`,
+      author: `${currentSessionUser.split("@")[0]}`,
       content,
       time: new Date().toISOString(),
       image,
       likeCount: 0,
       readTime,
       status,
-      id: `${title}${Math.floor((Math.random() * 1000000000) + 1)}`,
-      userName: currentSessionUser
+      id: `${title}${Math.floor(Math.random() * 1000000000 + 1)}`,
+      userName: currentSessionUser,
     };
 
     let updatedBlogs = blogs;
@@ -122,105 +122,125 @@ export default function CreateNewBlog() {
       content: "",
       image: "",
       readTime: "",
-      status: ""
+      status: "",
     });
     navigate("/profile");
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold text-center mb-4">
-        Create a Blog Post
-      </h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="mb-4">
-          <input
-            onChange={(e) => handleInputChange(e, setTitle)}
-            type="text"
-            name="title"
-            placeholder="Title"
-            className={`w-full p-2 border rounded ${
-              validationErrors.title ? 'border-red-500' : ''
-            }`}
-            value={title}
-          />
-          {validationErrors.title && (
-            <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
-          )}
-        </div>
+    <>
+      <Link
+        to="/profile"
+        className="inline-block mb-4 px-6 py-3 text-xl sm:text-base md:text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-500 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:from-sky-600 hover:to-blue-600"
+      >
+        Back to Profile
+      </Link>
 
-        <div className="mb-4">
-          <textarea
-            onChange={(e) => handleInputChange(e, setContent)}
-            name="content"
-            placeholder="Content"
-            className={`w-full p-2 border rounded h-24 ${
-              validationErrors.content ? 'border-red-500' : ''
-            }`}
-            value={content}
-          ></textarea>
-          {validationErrors.content && (
-            <p className="text-red-500 text-sm mt-1">{validationErrors.content}</p>
-          )}
-        </div>
+      <div className="max-w-lg mx-auto mt-10 p-8 bg-white shadow-lg rounded-2xl">
+        <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
+          Create a Blog Post
+        </h2>
 
-        <div className="mb-4">
-          <input
-            onChange={(e) => handleInputChange(e, setImage)}
-            type="text"
-            name="image"
-            placeholder="Image URL"
-            className={`w-full p-2 border rounded ${
-              validationErrors.image ? 'border-red-500' : ''
-            }`}
-            value={image}
-          />
-          {validationErrors.image && (
-            <p className="text-red-500 text-sm mt-1">{validationErrors.image}</p>
-          )}
-        </div>
+        <form onSubmit={handleFormSubmit}>
+          <div className="mb-6">
+            <input
+              onChange={(e) => handleInputChange(e, setTitle)}
+              type="text"
+              name="title"
+              placeholder="Title"
+              className={`w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition ${
+                validationErrors.title ? "border-red-500" : "border-gray-300"
+              }`}
+              value={title}
+            />
+            {validationErrors.title && (
+              <p className="text-red-500 text-sm mt-2">
+                {validationErrors.title}
+              </p>
+            )}
+          </div>
 
-        <div className="mb-4">
-          <input
-            onChange={(e) => handleInputChange(e, setReadTime)}
-            type="text"
-            name="readTime"
-            placeholder="Read time..."
-            className={`w-full p-2 border rounded ${
-              validationErrors.readTime ? 'border-red-500' : ''
-            }`}
-            value={readTime}
-          />
-          {validationErrors.readTime && (
-            <p className="text-red-500 text-sm mt-1">{validationErrors.readTime}</p>
-          )}
-        </div>
+          <div className="mb-6">
+            <textarea
+              onChange={(e) => handleInputChange(e, setContent)}
+              name="content"
+              placeholder="Content"
+              className={`w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition h-32 resize-none ${
+                validationErrors.content ? "border-red-500" : "border-gray-300"
+              }`}
+              value={content}
+            ></textarea>
+            {validationErrors.content && (
+              <p className="text-red-500 text-sm mt-2">
+                {validationErrors.content}
+              </p>
+            )}
+          </div>
 
-        <div className="mb-4">
-          <select
-            onChange={(e) => handleInputChange(e, setStatus)}
-            name="status"
-            className={`w-full p-2 border rounded ${
-              validationErrors.status ? 'border-red-500' : ''
-            }`}
-            value={status}
+          <div className="mb-6">
+            <input
+              onChange={(e) => handleInputChange(e, setImage)}
+              type="text"
+              name="image"
+              placeholder="Image URL"
+              className={`w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition ${
+                validationErrors.image ? "border-red-500" : "border-gray-300"
+              }`}
+              value={image}
+            />
+            {validationErrors.image && (
+              <p className="text-red-500 text-sm mt-2">
+                {validationErrors.image}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-6">
+            <input
+              onChange={(e) => handleInputChange(e, setReadTime)}
+              type="text"
+              name="readTime"
+              placeholder="Read time..."
+              className={`w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition ${
+                validationErrors.readTime ? "border-red-500" : "border-gray-300"
+              }`}
+              value={readTime}
+            />
+            {validationErrors.readTime && (
+              <p className="text-red-500 text-sm mt-2">
+                {validationErrors.readTime}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-6">
+            <select
+              onChange={(e) => handleInputChange(e, setStatus)}
+              name="status"
+              className={`w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition ${
+                validationErrors.status ? "border-red-500" : "border-gray-300"
+              }`}
+              value={status}
+            >
+              <option value="">Select a Category</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+            {validationErrors.status && (
+              <p className="text-red-500 text-sm mt-2">
+                {validationErrors.status}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:from-blue-600 hover:to-blue-700"
           >
-            <option value="">Select a Category</option>
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-          </select>
-          {validationErrors.status && (
-            <p className="text-red-500 text-sm mt-1">{validationErrors.status}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
   );
 }

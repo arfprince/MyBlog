@@ -9,9 +9,9 @@ export function useBlogs() {
 
 export function BlogsProvider({ children }) {
   const [blogs, setBlogs] = useState(JSON.parse(localStorage.getItem("blogs")) || {});
-
+  const [singleDetailedBlog,setSingleDetailedBlog] =  useState({});
   return (
-    <BlogsContext.Provider value={{ blogs, setBlogs }}>
+    <BlogsContext.Provider value={{ blogs, setBlogs, singleDetailedBlog, setSingleDetailedBlog}}>
       {children}
     </BlogsContext.Provider>
   );
